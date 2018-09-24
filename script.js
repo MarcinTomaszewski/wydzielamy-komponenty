@@ -66,31 +66,72 @@ var movies = [
 //ReactDOM.render(element, document.getElementById('app'));
 //metoda map() przyjmuje jako parametr funkcje, która przechodzi przez każdy element tablicy, który następnie jest mapowany do postaci ReactElementu korzystającego z informacji o filmie (movie.title i movie.desc)
 
-var moviesElements = movies.map(function (movie) {
+/*var moviesElements = movies.map(function (movie) {
     return (React.createElement('li', { key: movie.id },
-        React.createElement('h2', {}, movie.title),
-        React.createElement('p', {}, movie.desc),
-        React.createElement('p', {}, 'Rok produkcji: ' + movie.year),
-        React.createElement('img', { src: movie.photo })
+        React.createElement(MovieTitle, {}, movie.title),
+        React.createElement(MovieDescription, {}, movie.desc),
+        React.createElement(MovieYear, {}, 'Rok produkcji: ' + movie.year),
+        React.createElement(MoviePhoto, { src: movie.photo })
     ))
-});
+});*/
 
 var Movie = React.createClass({
-    propTypes: {
-        movie: React.PropTypes.array.isRequired,
+    propTypes:{
+        movies: React.propTypes.array.isRequired,
     },
-    render: function() {        
+    render: function() {  
         return (
             React.createElement('div', {},
                 React.createElement('h1', {}, 'Lista filmów'),
-                React.createElement('ul', {}, moviesElements)
+                React.createElement('ul', {}, 
+                    React.createElement(MovieTitle, {movies: movies}),
+                    React.createElement(MovieDescription, {movies: movies}),
+                    React.createElement(MovieYear, {movies: movies}),
+                    React.createElement(MoviePhoto, {movies: movies}),
+                )
             )
         )
     }
 });
 
-var element = React.createElement(Movie, { movie: moviesElements });
+var MovieTitle = React.createClass({ 
+    propTypes: {
+        movies: React.propTypes.object.inRequired,
+    },
+    render: function() {
+        return React.createElement('h2', {}, this.props.movies.title)
+        
+    }
+});
 
+var MovieDescription = React.createClass({
+    propTypes: {
+        movies: React.propTypes.object.inRequired,
+    },
+    render: function() {
+        return React.createElement('p', {}, this.props.movies.desc)
+    }
+});
+
+var MovieYear = React.createClass({
+    propTypes: {
+        movies: React.propTypes.object.inRequired,
+    },
+    render: function() {
+        return React.createElement('p', {}, this.props.movies.desc)
+    }
+});
+
+var MoviePhoto = React.createClass({
+    propTypes: {
+        movies: React.propTypes.object.inRequired,
+    },
+    render: function() {
+        return React.createElement('img', {}, this.props.movies.photo)
+    }
+});
+
+var element = React.createElement(Movie, {key: movies.id});
 ReactDOM.render(element, document.getElementById('app'));
 
 /*var GalleryItem = React.createClass({                           //do obgadania na rozmowie
