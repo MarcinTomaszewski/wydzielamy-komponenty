@@ -1,7 +1,5 @@
 /*
-Nie wiem czy dobrze zrozumiałem zadanie.
-1. Mam stworzyć oddzielne obiekty dla każdej właściwości TITLE, DESC, YEAR, PHOTO czy dla każdego filmu? Pewnie nie :)
-2. 
+1. Mateusz wszystko się wyświetla w oknie przeglądarki, ale niestety w konsoli wyskakują błędy :( 
 */
 
 /*
@@ -54,112 +52,85 @@ var movies = [
         desc: 'Opowieść o nowojorskiej rodzinie mafijnej',
         year: 1972,
         photo: 'images/ojciec-chrzestny.jpg'
-    },
-];
-//odpowiednie umieszczenie elementów w liście
-/*var element =
-    React.createElement('div', {},
-        React.createElement('h1', {}, 'Lista filmów'),
-        React.createElement('ul', {}, moviesElements)
-    );*/
-
-//ReactDOM.render(element, document.getElementById('app'));
-//metoda map() przyjmuje jako parametr funkcje, która przechodzi przez każdy element tablicy, który następnie jest mapowany do postaci ReactElementu korzystającego z informacji o filmie (movie.title i movie.desc)
-
-/*var moviesElements = movies.map(function (movie) {
-    return (React.createElement('li', { key: movie.id },
-        React.createElement(MovieTitle, {}, movie.title),
-        React.createElement(MovieDescription, {}, movie.desc),
-        React.createElement(MovieYear, {}, 'Rok produkcji: ' + movie.year),
-        React.createElement(MoviePhoto, { src: movie.photo })
-    ))
-});*/
-
-var Movie = React.createClass({
-    propTypes:{
-        movies: React.propTypes.array.isRequired,
-    },
-    render: function() {  
-        return (
-            React.createElement('div', {},
-                React.createElement('h1', {}, 'Lista filmów'),
-                React.createElement('ul', {}, 
-                    React.createElement(MovieTitle, {movies: movies}),
-                    React.createElement(MovieDescription, {movies: movies}),
-                    React.createElement(MovieYear, {movies: movies}),
-                    React.createElement(MoviePhoto, {movies: movies}),
-                )
-            )
-        )
     }
-});
+];
+
 
 var MovieTitle = React.createClass({ 
     propTypes: {
-        movies: React.propTypes.object.inRequired,
+        item: React.PropTypes.object.inRequired,
     },
     render: function() {
-        return React.createElement('h2', {}, this.props.movies.title)
+        return React.createElement('h2', {}, this.props.item.title)
         
-    }
+    },
 });
 
 var MovieDescription = React.createClass({
     propTypes: {
-        movies: React.propTypes.object.inRequired,
+        item: React.PropTypes.object.inRequired,
     },
     render: function() {
-        return React.createElement('p', {}, this.props.movies.desc)
-    }
+        return React.createElement('p', {}, this.props.item.desc)
+    },
 });
 
 var MovieYear = React.createClass({
     propTypes: {
-        movies: React.propTypes.object.inRequired,
+        item: React.PropTypes.object.inRequired,
     },
     render: function() {
-        return React.createElement('p', {}, this.props.movies.desc)
-    }
+        return React.createElement('p', {}, this.props.item.year)
+    },
 });
 
 var MoviePhoto = React.createClass({
     propTypes: {
-        movies: React.propTypes.object.inRequired,
+        item: React.PropTypes.object.inRequired,
     },
     render: function() {
-        return React.createElement('img', {}, this.props.movies.photo)
+        return React.createElement('img', {src: this.props.item.photo})
+    },
+});
+
+var Movie = React.createClass({
+    propTypes: {
+        item: React.PropTypes.array.inRequired,
+    },
+    render: function () {
+        var films = this.props.item.map(function (film) {
+            return (
+                React.createElement('li', { key: film.id },
+                    React.createElement(MovieTitle, { item: film }),
+                    React.createElement(MovieDescription, { item: film }),
+                    React.createElement(MovieYear, { item: film }),
+                    React.createElement(MoviePhoto, { item: film }),
+                )
+            )
+        });
+        return (
+            React.createElement('ul', {}, films)
+        );
+
+    },
+});
+
+
+var App = React.createClass({
+    render: function(){
+        return (            
+                React.createElement('h1', {}, 'Lista filmów'),
+                React.createElement(Movie, {item: movies})            
+        )
     }
 });
 
-var element = React.createElement(Movie, {key: movies.id});
+var element = React.createElement(App);
 ReactDOM.render(element, document.getElementById('app'));
 
-/*var GalleryItem = React.createClass({                           //do obgadania na rozmowie
-    propTypes: {
-        image: React.PropTypes.object.isRequired,
-    },
-
-    render: function () {
-        return (
-            React.createElement('div', {},
-                React.createElement('h2', {}, this.props.image.name),
-                React.createElement('img', { src: this.props.image.src })
-            )
-        )
-    },
-});*/
 
 
 
-//tworzę odpowiedni obiekt 
-/*var image = {
-    name: 'Kotek',
-    src: 'http://imgur.com/n8OYCzR.png'
-};*/
 
-//i przekazuje go do komponentu przez props
-//var element = React.createElement(GalleryItem, { image: image });
-
-//wyświetlam element na stronie w elemencie o id app
 
 
