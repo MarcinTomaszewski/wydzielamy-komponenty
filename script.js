@@ -58,7 +58,7 @@ var movies = [
 
 var MovieTitle = React.createClass({ 
     propTypes: {
-        item: React.PropTypes.object.inRequired,
+        item: React.PropTypes.object.isRequired,
     },
     render: function() {
         return React.createElement('h2', {}, this.props.item.title)
@@ -68,7 +68,7 @@ var MovieTitle = React.createClass({
 
 var MovieDescription = React.createClass({
     propTypes: {
-        item: React.PropTypes.object.inRequired,
+        item: React.PropTypes.object.isRequired,
     },
     render: function() {
         return React.createElement('p', {}, this.props.item.desc)
@@ -77,7 +77,7 @@ var MovieDescription = React.createClass({
 
 var MovieYear = React.createClass({
     propTypes: {
-        item: React.PropTypes.object.inRequired,
+        item: React.PropTypes.object.isRequired,
     },
     render: function() {
         return React.createElement('p', {}, this.props.item.year)
@@ -86,7 +86,7 @@ var MovieYear = React.createClass({
 
 var MoviePhoto = React.createClass({
     propTypes: {
-        item: React.PropTypes.object.inRequired,
+        item: React.PropTypes.object.isRequired,
     },
     render: function() {
         return React.createElement('img', {src: this.props.item.photo})
@@ -95,7 +95,7 @@ var MoviePhoto = React.createClass({
 
 var Movie = React.createClass({
     propTypes: {
-        item: React.PropTypes.array.inRequired,
+        item: React.PropTypes.array.isRequired,
     },
     render: function () {
         var films = this.props.item.map(function (film) {
